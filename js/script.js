@@ -18,10 +18,12 @@ function createAutocompleteList(list) {
   for (let item of list) {
     autocompleteList.insertAdjacentHTML("beforeend", `<li class="search-list__item">${item.name}</li>`)
   }
+  search.addEventListener('click', createCard)
 }
 
 function clearAutocompleteList(autocompleteList) {
   autocompleteList.innerHTML = ''
+  search.removeEventListener('click', createCard)
 }
 
 async function gitSearch(e) {
@@ -80,5 +82,4 @@ function removeErrorMessage() {
 
 input.addEventListener('submit', e => e.preventDefault())
 input.addEventListener('keyup', debounce(gitSearch, 400))
-search.addEventListener('click', createCard)
 resultsList.addEventListener('click', removeCard)
