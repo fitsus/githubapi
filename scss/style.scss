@@ -1,0 +1,110 @@
+@import 'nullstyle';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+body {
+  background-color: #161617;
+  color: rgb(224, 224, 224);
+  font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    margin-top: 1em;
+    font-size: 32px;
+  }
+  .content {
+    margin-top: 1em;
+    color: #86868b;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search {
+  margin-top: 1em;
+  width: 66%;
+  font-size: 24px;
+  height: 300px;
+  &-input {
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: rgb(224, 224, 224);
+    &--error {
+      border: 4px solid rgb(175, 0, 0);
+    }
+  }
+  &-list {
+    margin-top: -6px;
+    &__item {
+      background-color: rgb(224, 224, 224);
+      color: #161617;
+      padding: 12px;
+      cursor: pointer;
+      border-top: 1px solid #86868b;
+      &:nth-child(1) {
+        padding-top: 18px;
+      }
+      &:hover {
+        background-color: #006edb;
+        color: #ffffff;
+        z-index: 999;
+      }
+      &:active {
+        background-color: #023a72;
+      }
+    }
+  }
+  &__error-message {
+    text-align: center;
+    font-size: 18px;
+    color: rgb(175, 0, 0);
+  }
+}
+
+.list {
+  display: grid;
+  width: 66%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 100px;
+  &-item {
+    position: relative;
+    background-color: rgb(244, 244, 244);
+    color: #161617;
+    padding: 12px;
+    border-radius: 12px;
+  }
+  &__content {
+    font-size: 22px;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  border: 2px solid #161617;
+  border-radius: 12px;
+  font-size: 44px;
+  vertical-align: middle;
+  &:hover {
+    border: 0;
+    background-color: #006edb;
+    color: #ffffff;
+  }
+  &:active {
+    background-color: #023a72;
+  }
+}
