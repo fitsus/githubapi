@@ -29,21 +29,23 @@ function clearAutocompleteList(autocompleteList) {
 async function gitSearch(e) {
   removeErrorMessage()
   clearAutocompleteList(autocompleteList)
-  searchLink.searchParams.set('q', e.target.value)
-  searchLink.searchParams.set('per_page', 5)
-  return await fetch(searchLink).then(res => {
-    if(res.ok){
-      res.json().then(res => {
-        if (res.items.length == 0) {
-          throw new Error('No repositories')
-        }
-        currentSearch = res.items
-        createAutocompleteList(currentSearch)
-      }).catch(err => addErrorMessage(err))
-    } else {
-      throw new Error(`${res.status} ${res.statusText}`)
-    }
-  }).catch(err => addErrorMessage(err))
+  if(e.target.value.trim() !== '') {
+    searchLink.searchParams.set('q', e.target.value)
+    searchLink.searchParams.set('per_page', 5)
+    return await fetch(searchLink).then(res => {
+      if(res.ok){
+        res.json().then(res => {
+          if (res.items.length == 0) {
+            throw new Error('No repositories')
+          }
+          currentSearch = res.items
+          createAutocompleteList(currentSearch)
+        }).catch(err => addErrorMessage(err))
+      } else {
+        throw new Error(`${res.status} ${res.statusText}`)
+      }
+    }).catch(err => addErrorMessage(err))
+  }
 }
 
 function createCard(e) {
@@ -58,11 +60,17 @@ function createCard(e) {
       <p class="list__content">Stars: <span class="list__content--dynamic">${stargazers_count}</span></p>
       <button class="close-btn">X</button>`)
   }
+  if(resultsList.childNodes.length === 1) {
+    resultsList.addEventListener('click', removeCard)
+  }
 }
 
 function removeCard(e) {
   if(e.target.classList.contains('close-btn')) {
     e.target.parentElement.remove()
+  }
+  if(resultsList.childNodes.length === 0) {
+    resultsList.removeEventListener('click', removeCard)
   }
 }
 
@@ -81,5 +89,4 @@ function removeErrorMessage() {
 
 
 input.addEventListener('submit', e => e.preventDefault())
-input.addEventListener('keyup', debounce(gitSearch, 400))
-resultsList.addEventListener('click', removeCard)
+input.addEventListener('input', debounce(gitSearch, 400))
